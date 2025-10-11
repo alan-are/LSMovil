@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="action_profile" type="id" />
+    <item name="action_past_chats" type="id" />
+    <item name="nav_my_account" type="id" />
+    <item name="nav_my_professors" type="id" />
+    <item name="nav_my_reviews" type="id" />
+    <item name="professorsRecyclerView" type="id" />
+    <item name="imageView4" type="id" />
+    <item name="chatRecyclerView" type="id" />
+    <item name="messageEditText" type="id" />
+    <item name="sendButton" type="id" />
+    <item name="drawer_layout" type="id" />
+    <item name="nav_view" type="id" />
+    <item name="button" type="id" />
+    <item name="spinnerProfesores" type="id" />
+    <item name="spinnerMaterias" type="id" />
+    <item name="txtTitulo" type="id" />
+    <item name="txtTituloIA" type="id" />
+    <item name="txtCorreo" type="id" />
+    <item name="txtSoporte" type="id" />
+    <item name="cardMensaje" type="id" />
+    <item name="btnVolver" type="id" />
+    <item name="btnVolverOpiniones" type="id" />
+    <item name="txtAcerca" type="id" />
+    <item name="cardDescripcion" type="id" />
+    <item name="layoutSocial" type="id" />
+    <item name="ytIcon" type="id" />
+    <item name="switchTema" type="id" />
+    <item name="switchWifi" type="id" />
+    <item name="switchAnonimo" type="id" />
+    <item name="switchNotificaciones" type="id" />
+    <item name="spinnerIdioma" type="id" />
+    <item name="btnCerrarSesionConfig" type="id" />
+    <item name="btnVolverConfig" type="id" />
+    <item name="txtEliminarCuenta" type="id" />
+</resources>

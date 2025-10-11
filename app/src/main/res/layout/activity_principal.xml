@@ -1,0 +1,222 @@
+
+
+
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Principal">
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <!-- Toolbar -->
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/black"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <!-- Buscador -->
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#CCC8BB"
+                android:hint="Buscar Profesores"
+                android:queryHint="Buscar..."
+                android:theme="@style/SearchViewStyle"
+                app:backgroundTint="@color/white"
+                app:iconifiedByDefault="false">
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </androidx.appcompat.widget.SearchView>
+
+            <TextView
+                android:id="@+id/textViewLastReviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:text="Ultimas reseñas:"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- Resultados de búsqueda -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerResultadosBusqueda"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:padding="8dp"/>
+
+            <!-- FORMULARIO ACTUALIZADO -->
+            <LinearLayout
+                android:id="@+id/formDescribeProfessor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Describe a tu profesor"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteProfesores"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Escribe el nombre del profesor"
+                    android:textColor="#090909"
+                    android:textColorHint="@color/dark_gray" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteMaterias"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Escribe la materia "
+                    android:textColor="#090909"
+                    android:textColorHint="@color/dark_gray" />
+
+                <EditText
+                    android:id="@+id/editTextDescriptionProfessor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="top|start"
+                    android:hint="Comentario (máx. 250 caracteres)"
+                    android:inputType="textMultiLine"
+                    android:maxLength="250"
+                    android:minLines="3"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/dark_gray" />
+
+                <RatingBar
+                    android:id="@+id/ratingBarProfessor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:numStars="5"
+                    android:progressTint="#FDD835"
+                    android:stepSize="1.0" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnCancelForm"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/black"
+                        android:text="Cancelar"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/btnSaveForm"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/black"
+                        android:text="Guardar"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerResenas"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/emptyResenas3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|top"
+                android:layout_margin="20dp"
+                android:gravity="center|top"
+                android:text="No hay reseñas disponibles"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnDescribeProfessor"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center|fill_vertical"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="#1E88E5"
+                android:elevation="4dp"
+                android:text="DESCRIBE A TU PROFESOR"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+    <!-- MENÚ LATERAL -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/black"
+        app:itemIconSize="30dp"
+        app:menu="@menu/drawer_menu"
+        app:itemIconTint="@null"
+        app:itemVerticalPadding="12dp"
+        app:headerLayout="@layout/nav_header" />
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
+
+
