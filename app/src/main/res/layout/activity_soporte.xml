@@ -4,96 +4,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="@android:color/black">
+    android:background="@color/white"
+    android:padding="24dp">
 
-    <!-- Título CUCEI -->
+    <!-- Botón Regresar con nuevo estilo -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/backButton"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        android:background="@drawable/button_gradient"
+        android:drawableLeft="@android:drawable/ic_menu_revert"
+        android:drawableTint="#FFFFFF"
+        android:paddingStart="10dp"
+        android:text="Regresar"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Título LSM -->
     <TextView
         android:id="@+id/txtTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CUCEI "
-        android:textSize="24sp"
+        android:layout_marginTop="50dp"
+        android:text="LSM"
+        android:textColor="#1F538B"
+        android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:textColor="#FFFFFF"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Título IA -->
+    <!-- Título ovil -->
     <TextView
         android:id="@+id/txtTituloIA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="IA"
-        android:textSize="24sp"
+        android:text="ovil"
+        android:textColor="#4CCB73"
+        android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@id/txtTitulo"
         app:layout_constraintStart_toEndOf="@id/txtTitulo"
-        android:textColor="#007BFF"/>
+        app:layout_constraintTop_toTopOf="@id/txtTitulo" />
 
-    <!-- Subtítulo Soporte -->
     <TextView
         android:id="@+id/txtSoporte"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Soporte"
+        android:textColor="#000000"
         android:textSize="18sp"
-        android:textStyle="normal"
-        android:textColor="#BBBBBB"
-        app:layout_constraintTop_toBottomOf="@id/txtTitulo"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtTitulo" />
 
-    <!-- Correo -->
     <TextView
         android:id="@+id/txtCorreo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="examplemail@udg.com.mx"
         android:textColor="#007BFF"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/txtSoporte"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintTop_toBottomOf="@id/txtSoporte" />
 
-    <!-- CardView para el mensaje -->
-
-    <!-- Botón volver -->
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardMensaje"
+        android:id="@+id/cardDescripcion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
         app:cardBackgroundColor="#1E1E1E"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtCorreo">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00897B"
+            android:padding="16dp"
+            android:text="Envíanos cualquier duda o reporte que tengas con nuestra aplicación. Lo resolveremos lo más pronto posible."
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
     </androidx.cardview.widget.CardView>
-
-    <Button
-        android:id="@+id/btnVolver"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Volver"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#007BFF"
-        android:textColor="#FFFFFF"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="Envíanos cualquier duda o reporte que tengas con nuestra aplicación. Lo resolveremos lo más pronto posible."
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@+id/txtCorreo"
-        tools:layout_editor_absoluteX="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

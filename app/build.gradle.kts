@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.app"
+    namespace = "com.example.lsmovil"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.app"
+        applicationId = "com.example.lsmovil"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -47,33 +47,30 @@ android {
 }
 
 dependencies {
-    // AndroidX
 
+    implementation(libs.play.services.base)
+
+    // AndroidX
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
 
-    // Firebase BOM
     implementation(platform(libs.firebase.bom))
+
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
-    implementation(libs.firebase.inappmessaging)
 
-    // Google Services
     implementation(libs.play.services.auth)
 
-    // Credentials
+    implementation(libs.glide)
     implementation(libs.credentials)
     implementation(libs.credentials.play.services.auth)
-
-    // Glide
-    implementation(libs.glide)
+    implementation(libs.googleid)
     annotationProcessor(libs.glide.compiler)
 
-    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

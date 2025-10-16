@@ -11,10 +11,10 @@
         android:id="@+id/imageViewProfile"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:src="@drawable/alumnos"
-        android:scaleType="centerCrop"
         android:layout_marginBottom="8dp"
-        android:contentDescription="Foto de perfil" />
+        android:contentDescription="Foto de perfil"
+        android:scaleType="centerCrop"
+        android:src="@drawable/baseline_person_24" />
 
     <TextView
         android:id="@+id/textViewName"

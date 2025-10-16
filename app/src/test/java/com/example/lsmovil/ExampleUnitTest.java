@@ -1,4 +1,4 @@
-package com.example.app;
+package com.example.lsmovil;
 
 import org.junit.Test;
 

@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name" translatable="false">CUCEI IA</string>
+    <string name="app_name" translatable="false">LSMovil</string>
     <string name="navigation_drawer_open">\n</string>
     <string name="navigation_drawer_close">\n</string>
-    <string name="default_web_client_id">811442929857-6gk0vak1aq90lh4ir1odarbjaapio3p1.apps.googleusercontent.com</string>
+    <string name="default_web_client_id">729960099395-ks05fnipdh1vmu9efkvlked2uvq8ng1t.apps.googleusercontent.com</string>
     <string name="open_drawer">\n</string>
     <string name="close_drawer">\n</string>
 

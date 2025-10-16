@@ -2,11 +2,6 @@
 
 
     <item
-        android:id="@+id/nav_profesores_opiniones"
-        android:title="Mis profesores y opiniones"
-        android:icon="@android:drawable/ic_menu_agenda" />
-
-    <item
         android:id="@+id/nav_soporte"
         android:title="Soporte"
         android:icon="@android:drawable/ic_menu_help" />

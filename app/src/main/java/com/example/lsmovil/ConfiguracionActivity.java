@@ -1,17 +1,15 @@
-package com.example.app;
+package com.example.lsmovil;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ConfiguracionActivity extends AppCompatActivity {
-    private Button btnCerrarSesion, btnVolverPrincipal, btnAyuda;
-    private TextView txtEliminarCuenta;
+    private Button btnCerrarSesion, btnVolverPrincipal, btnAyuda, btnEliminarCuenta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,9 +18,9 @@ public class ConfiguracionActivity extends AppCompatActivity {
 
         // Bind views
         btnCerrarSesion = findViewById(R.id.btnCerrarSesionConfig);
-        btnVolverPrincipal = findViewById(R.id.btnVolverPrincipal);
+        btnVolverPrincipal = findViewById(R.id.backButton);
         btnAyuda = findViewById(R.id.btnAyuda);
-        txtEliminarCuenta = findViewById(R.id.txtEliminarCuenta);
+        btnEliminarCuenta = findViewById(R.id.btnEliminarCuenta);
 
         // Cerrar sesión
         btnCerrarSesion.setOnClickListener(v -> {
@@ -33,7 +31,7 @@ public class ConfiguracionActivity extends AppCompatActivity {
         });
 
         // Eliminar cuenta
-        txtEliminarCuenta.setOnClickListener(v -> {
+        btnEliminarCuenta.setOnClickListener(v -> {
             FirebaseAuth.getInstance().getCurrentUser().delete()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {

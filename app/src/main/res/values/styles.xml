@@ -8,5 +8,12 @@
         <item name="queryHint">@string/buscar_profesores</item><!-- Color de texto del EditText blanco -->
     </style>
 
+    <style name="CustomNavigationMenu" parent="Widget.Design.NavigationView">
+        <item name="android:textSize">18sp</item> <!-- Tamaño de fuente -->
+        <item name="android:textColor">#FFFFFF</item> <!-- Color negro -->
+        <item name="android:textStyle">bold</item> <!-- Negritas -->
+        <item name="android:background">#1F538B</item>
+    </style>
+
     <string name="buscar_profesores">Buscar profesores...</string>
 </resources>
