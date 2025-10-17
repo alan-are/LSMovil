@@ -74,9 +74,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="¡Hola! 👋\n\nBienvenid@ a LSMóvil, aquí puedes elegir entre traducir o aprender."
+                            android:text="¡Hola! 👋\nBienvenid@ a LSMóvil, aquí puedes elegir entre traducir o aprender."
                             android:textColor="?attr/colorOnPrimaryContainer"
-                            android:textSize="16sp"
+                            android:textSize="20sp"
                             android:fontFamily="sans-serif-medium"
                             android:lineSpacingExtra="4dp"
                             android:layout_marginEnd="16dp" />
@@ -106,123 +106,98 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:baselineAligned="false">
+                    android:orientation="vertical">
 
                     <!-- Card Traducir -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="8dp"
-                        android:orientation="vertical">
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardTraducir"
+                        style="@style/Widget.Material3.CardView.Filled"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_marginBottom="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        app:cardBackgroundColor="?attr/colorSecondaryContainer"
+                        app:cardCornerRadius="16dp">
 
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/cardTraducir"
-                            style="@style/Widget.Material3.CardView.Filled"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:cardCornerRadius="16dp"
-                            app:cardBackgroundColor="?attr/colorSecondaryContainer"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:foreground="?attr/selectableItemBackground">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="20dp"
-                                android:gravity="center">
-
-                                <ImageView
-                                    android:id="@+id/imageButton"
-                                    android:layout_width="100dp"
-                                    android:layout_height="100dp"
-                                    android:scaleType="fitCenter"
-                                    android:contentDescription="Traducir"
-                                    app:srcCompat="@drawable/ic_traducir"/>
-                                <!--app:tint="?attr/colorOnSecondaryContainer"-->
-
-                                <Space
-                                    android:layout_width="match_parent"
-                                    android:layout_height="8dp" />
-                            </LinearLayout>
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <TextView
-                            android:id="@+id/textView3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="TRADUCIR"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="?attr/colorOnSurface"
-                            android:fontFamily="sans-serif-condensed-medium"
+                            android:layout_height="match_parent"
                             android:gravity="center"
-                            android:layout_marginTop="12dp" />
-                    </LinearLayout>
+                            android:orientation="horizontal"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:id="@+id/imageButton"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_marginEnd="16dp"
+                                android:contentDescription="Traducir"
+                                android:scaleType="fitCenter"
+                                app:srcCompat="@drawable/ic_traducir" />
+
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif-condensed-medium"
+                                android:gravity="center_vertical|end"
+                                android:text="TRADUCIR"
+                                android:textColor="?attr/colorOnSurface"
+                                android:textSize="50sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
 
                     <!-- Card Aprender -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="8dp"
-                        android:orientation="vertical">
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardAprender"
+                        style="@style/Widget.Material3.CardView.Filled"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_marginTop="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/md_theme_light_tertiaryContainer"
+                        app:cardCornerRadius="16dp">
 
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/cardAprender"
-                            style="@style/Widget.Material3.CardView.Filled"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:cardCornerRadius="16dp"
-                            app:cardBackgroundColor="?attr/colorTertiaryContainer"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:foreground="?attr/selectableItemBackground">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="20dp"
-                                android:gravity="center">
-
-                                <ImageView
-                                    android:id="@+id/imageButton2"
-                                    android:layout_width="100dp"
-                                    android:layout_height="100dp"
-                                    android:scaleType="fitCenter"
-                                    android:contentDescription="Aprender"
-                                    app:srcCompat="@drawable/ic_aprender"/>
-                                <!--app:tint="?attr/colorOnTertiaryContainer"-->
-
-                                <Space
-                                    android:layout_width="match_parent"
-                                    android:layout_height="8dp" />
-                            </LinearLayout>
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="APRENDER"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="?attr/colorOnSurface"
-                            android:fontFamily="sans-serif-condensed-medium"
+                            android:layout_height="match_parent"
                             android:gravity="center"
-                            android:layout_marginTop="12dp" />
-                    </LinearLayout>
+                            android:orientation="horizontal"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:id="@+id/textView4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif-condensed-medium"
+                                android:gravity="center_vertical|start"
+                                android:text="APRENDER"
+                                android:textColor="@color/md_theme_dark_inverseOnSurface"
+                                android:textSize="50sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/imageButton2"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_marginEnd="16dp"
+                                android:contentDescription="Aprender"
+                                android:scaleType="fitCenter"
+                                app:srcCompat="@drawable/ic_aprender" />
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
 
                 <!-- Espaciador para navigation bar -->
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="32dp" />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
