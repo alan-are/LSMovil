@@ -1,18 +1,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <group android:checkableBehavior="single">
+        
+        <item
+            android:id="@+id/nav_soporte"
+            android:title="Soporte"
+            android:icon="@drawable/ic_soporte" />
 
-    <item
-        android:id="@+id/nav_soporte"
-        android:title="Soporte"
-        android:icon="@android:drawable/ic_menu_help" />
+        <item
+            android:id="@+id/nav_configuracion"
+            android:title="Configuración"
+            android:icon="@drawable/ic_settings" />
 
-    <item
-        android:id="@+id/nav_configuracion"
-        android:title="Configuración"
-        android:icon="@android:drawable/ic_menu_preferences" />
-
-    <item
-        android:id="@+id/nav_acerca"
-        android:title="Acerca de la app"
-        android:icon="@android:drawable/ic_menu_info_details" />
+        <item
+            android:id="@+id/nav_acerca"
+            android:title="Acerca de"
+            android:icon="@drawable/ic_info" />
+            
+    </group>
+    
 </menu>

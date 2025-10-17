@@ -51,6 +51,10 @@ public class Principal extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // Habilitar edge-to-edge según guías de Material Design
+        androidx.activity.EdgeToEdge.enable(this);
+        
         setContentView(R.layout.activity_principal);
         hideKeyboard(Principal.this);
 
@@ -65,6 +69,12 @@ public class Principal extends AppCompatActivity {
         // Configurar drawer layout
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
+        
+        // Aplicar WindowInsets para edge-to-edge
+        androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(drawerLayout, (v, insets) -> {
+            // El drawer layout maneja los insets automáticamente con fitsSystemWindows
+            return insets;
+        });
 
         // Obtener los elementos del header
         View headerView = navigationView.getHeaderView(0);

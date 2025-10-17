@@ -67,7 +67,6 @@ public class Inicio extends AppCompatActivity {
     private TextView textViewSignUp;
     private TextView textViewSignUp2;
     private TextView textViewSignUp3;
-    private TextView textView6;
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -94,11 +93,16 @@ public class Inicio extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // Habilitar edge-to-edge según guías de Google
         EdgeToEdge.enable(this);
+        
         setContentView(R.layout.activity_login);
+        
+        // Aplicar WindowInsets para edge-to-edge
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            // No aplicar padding aquí, lo manejamos en el layout
             return insets;
         });
 
@@ -113,30 +117,13 @@ public class Inicio extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         editEmailLogin = findViewById(R.id.editEmailLogin);
         editPasswordLogin = findViewById(R.id.editPasswordLogin);
-        CheckBox checkBoxShowPasswordLogin = findViewById(R.id.checkBoxShowPasswordLogin);
+        // Nota: El toggle de contraseña ahora es nativo del TextInputLayout
 
         // Inicializar TextViews
         textViewSignUp = findViewById(R.id.textViewSignUp);
         textViewSignUp2 = findViewById(R.id.textViewSignUp2);
         textViewSignUp3 = findViewById(R.id.textViewSignUp3);
-        textView6 = findViewById(R.id.textView6);
-
-        // Configurar mostrar/ocultar contraseña
-        checkBoxShowPasswordLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // Mostrar contraseña
-                    editPasswordLogin.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                } else {
-                    // Ocultar contraseña
-                    editPasswordLogin.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }
-
-                // Mover el cursor al final del texto
-                editPasswordLogin.setSelection(editPasswordLogin.getText().length());
-            }
-        });
+        // textView6 ya no existe en el nuevo diseño
 
         // Configurar botón de login con correo
         btnLogin.setOnClickListener(new View.OnClickListener() {

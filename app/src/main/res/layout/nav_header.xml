@@ -9,11 +9,12 @@
 
     <ImageView
         android:id="@+id/imageViewProfile"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="12dp"
         android:contentDescription="Foto de perfil"
         android:scaleType="centerCrop"
+        android:background="@drawable/profile_image_background"
         android:src="@drawable/baseline_person_24" />
 
     <TextView
@@ -23,14 +24,26 @@
         android:text="Nombre del usuario"
         android:textColor="@android:color/white"
         android:textStyle="bold"
-        android:textSize="16sp" />
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-medium"
+        android:shadowColor="#40000000"
+        android:shadowDx="0"
+        android:shadowDy="2"
+        android:shadowRadius="4" />
 
     <TextView
         android:id="@+id/textViewEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:text="correo@ejemplo.com"
         android:textColor="@android:color/white"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:fontFamily="sans-serif"
+        android:alpha="0.9"
+        android:shadowColor="#40000000"
+        android:shadowDx="0"
+        android:shadowDy="1"
+        android:shadowRadius="2" />
 
 </LinearLayout>

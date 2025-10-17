@@ -15,7 +15,7 @@
         android:id="@+id/logoImageView"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:src="@drawable/lsmovil3" />
+        android:src="@drawable/logo_final" />
 
     <ProgressBar
         android:id="@+id/progressBar"

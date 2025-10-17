@@ -1,103 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:padding="24dp">
+    android:fitsSystemWindows="false"
+    android:background="?attr/colorSurface">
 
-    <!-- Botón Regresar con nuevo estilo -->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/backButton"
-        android:layout_width="150dp"
-        android:layout_height="48dp"
-        android:background="@drawable/button_gradient"
-        android:drawableLeft="@android:drawable/ic_menu_revert"
-        android:drawableTint="#FFFFFF"
-        android:paddingStart="10dp"
-        android:text="Regresar"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txtConfiguracion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="75dp"
-        android:text="Configuración"
-        android:textColor="#1F538B"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardSettings"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        app:cardBackgroundColor="#1E1E1E"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtConfiguracion">
+    <!-- Contenido principal con scroll -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#383838"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="32dp">
 
-            <!-- Botón Cerrar sesión -->
-            <Button
-                android:id="@+id/btnCerrarSesionConfig"
+            <!-- Espaciador superior para status bar -->
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:backgroundTint="#F4511E"
-                android:text="Cerrar sesión"
-                android:textColor="#FFFFFF" />
+                android:layout_height="16dp" />
 
-            <!-- Botón Eliminar cuenta -->
-            <Button
-                android:id="@+id/btnEliminarCuenta"
-                android:layout_width="match_parent"
+            <!-- Botón de regresar -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/backButton"
+                style="@style/Widget.Material3.Button.TextButton.Icon"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:backgroundTint="#D32F2F"
-                android:text="Eliminar cuenta"
-                android:textColor="#FFFFFF" />
+                android:text="Regresar"
+                android:textAllCaps="false"
+                app:icon="@android:drawable/ic_menu_revert"
+                app:iconTint="?attr/colorPrimary"
+                android:textColor="?attr/colorPrimary"
+                android:layout_marginBottom="24dp" />
 
-            <!-- Botón Ayuda -->
-            <Button
-                android:id="@+id/btnAyuda"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:backgroundTint="@color/white"
-                android:text="Ayuda"
-                android:textColor="@color/black" />
-
-            <!-- Texto Versión -->
+            <!-- Título -->
             <TextView
-                android:id="@+id/txtVersion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="8dp"
-                android:text="Versión 0.5 beta"
-                android:textColor="#B0BEC5"
-                android:textSize="14sp" />
+                android:text="Configuración"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSurface"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginBottom="32dp" />
+
+            <!-- Sección: Cuenta -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cuenta"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorPrimary"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginBottom="8dp"
+                android:letterSpacing="0.1" />
+
+            <!-- Card de configuración de cuenta -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.Material3.CardView.Elevated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                android:layout_marginBottom="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <!-- Botón Cerrar sesión -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCerrarSesionConfig"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="Cerrar sesión"
+                        android:textSize="15sp"
+                        android:textAllCaps="false"
+                        android:fontFamily="sans-serif-medium"
+                        app:icon="@android:drawable/ic_menu_revert"
+                        app:iconGravity="start"
+                        app:cornerRadius="12dp"
+                        android:layout_marginBottom="8dp"
+                        android:backgroundTint="?attr/colorErrorContainer"
+                        android:textColor="?attr/colorOnErrorContainer"
+                        app:iconTint="?attr/colorOnErrorContainer" />
+
+                    <!-- Botón Eliminar cuenta -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnEliminarCuenta"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="Eliminar cuenta"
+                        android:textSize="15sp"
+                        android:textAllCaps="false"
+                        android:fontFamily="sans-serif-medium"
+                        app:icon="@android:drawable/ic_menu_delete"
+                        app:iconGravity="start"
+                        app:cornerRadius="12dp"
+                        app:strokeColor="?attr/colorError"
+                        android:textColor="?attr/colorError"
+                        app:iconTint="?attr/colorError" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Sección: Ayuda y soporte -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ayuda y soporte"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorPrimary"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginBottom="8dp"
+                android:letterSpacing="0.1" />
+
+            <!-- Card de ayuda -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.Material3.CardView.Elevated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                android:layout_marginBottom="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <!-- Botón Ayuda -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnAyuda"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="Centro de ayuda"
+                        android:textSize="15sp"
+                        android:textAllCaps="false"
+                        android:fontFamily="sans-serif-medium"
+                        app:icon="@android:drawable/ic_menu_help"
+                        app:iconGravity="start"
+                        app:cornerRadius="12dp" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Sección: Información de la app -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Información de la app"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorPrimary"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginBottom="8dp"
+                android:letterSpacing="0.1" />
+
+            <!-- Card de información -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.Material3.CardView.Filled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                app:cardElevation="0dp"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Versión -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Versión"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="14sp"
+                            android:fontFamily="sans-serif" />
+
+                        <TextView
+                            android:id="@+id/txtVersion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1.0.0-material3"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-medium" />
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="12dp"
+                        app:dividerColor="?attr/colorOutlineVariant" />
+
+                    <!-- Build -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Build"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="14sp"
+                            android:fontFamily="sans-serif" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Beta"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-medium" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Espaciador inferior para navigation bar -->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="32dp" />
 
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-    </androidx.cardview.widget.CardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -58,11 +58,16 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // Habilitar edge-to-edge según guías de Material Design
         EdgeToEdge.enable(this);
+        
         setContentView(R.layout.activity_sign_up);
+        
+        // Aplicar WindowInsets para edge-to-edge
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            // No aplicar padding aquí, lo manejamos en el layout
             return insets;
         });
 
@@ -72,7 +77,7 @@ public class SignUpActivity extends AppCompatActivity {
         // Inicializar vistas
         buttonBack = findViewById(R.id.backButton);
         buttonSignUp = findViewById(R.id.buttonSignUp);
-        CheckBox checkBoxShowPassword = findViewById(R.id.checkBoxShowPassword);
+        // Nota: El toggle de contraseña ahora es nativo del TextInputLayout
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
         editTextEmail = findViewById(R.id.editTextEmailSignUp);
@@ -85,26 +90,6 @@ public class SignUpActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        // Configurar mostrar/ocultar contraseña
-checkBoxShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked) {
-            // Mostrar Password en ambos campos
-            editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            editTextConfirmPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-        } else {
-            // Ocultar Password en ambos campos - CORREGIDO
-            editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            editTextConfirmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance()); // Cambiado aquí
-        }
-
-        // Mover el cursor al final del texto en ambos campos
-        editTextPassword.setSelection(editTextPassword.getText().length());
-        editTextConfirmPassword.setSelection(editTextConfirmPassword.getText().length());
-    }
-});
 
         // Configurar botón de registro
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
