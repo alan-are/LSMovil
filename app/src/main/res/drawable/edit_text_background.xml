@@ -1,4 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-  
-</selector>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Color de fondo del text box -->
+    <!-- En tu login usas #F8F6F6 -->
+    <solid android:color="#F8F6F6" />
+
+    <!-- Borde del text box (stroke) -->
+    <!-- Un borde sutil de 1dp de grosor en color gris claro -->
+    <stroke
+        android:width="1dp"
+        android:color="#4CCB73" />
+
+    <!-- Esquinas redondeadas -->
+    <!-- 8dp es un valor estándar y agradable a la vista, como en tus CardViews -->
+    <corners android:radius="10dp" />
+
+    <!-- Padding interno -->
+    <!-- MUY IMPORTANTE: Esto crea un espacio para que el texto no se pegue a los bordes. -->
+    <!-- Es mejor definirlo aquí que en cada EditText por separado. -->
+    <padding
+        android:left="16dp"
+        android:top="6dp"
+        android:right="16dp"
+        android:bottom="6dp" />
+
+</shape>

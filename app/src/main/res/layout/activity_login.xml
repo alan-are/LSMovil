@@ -50,8 +50,8 @@
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:background="#FFFFFF"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/lsmlite" />
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/mascotalsm" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
