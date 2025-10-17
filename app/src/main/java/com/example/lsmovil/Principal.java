@@ -158,14 +158,22 @@ public class Principal extends AppCompatActivity {
     }
 
     private void setupBasicFunctionality() {
-        // Este método es para que agregues la funcionalidad específica que necesites
-        // Por ejemplo, podrías agregar un botón de "Comenzar" o alguna acción principal
+        // Configurar click listener para el botón/card de Aprender
+        com.google.android.material.card.MaterialCardView cardAprender = findViewById(R.id.cardAprender);
+        if (cardAprender != null) {
+            cardAprender.setOnClickListener(v -> {
+                startActivity(new Intent(Principal.this, AprenderActivity.class));
+            });
+        }
 
-        // Ejemplo básico:
-        // Button btnStart = findViewById(R.id.btnStart); // Si agregas un botón en el XML
-        // btnStart.setOnClickListener(v -> {
-        //     Toast.makeText(this, "Funcionalidad por implementar", Toast.LENGTH_SHORT).show();
-        // });
+        // Configurar click listener para el botón/card de Traducir (si existe)
+        com.google.android.material.card.MaterialCardView cardTraducir = findViewById(R.id.cardTraducir);
+        if (cardTraducir != null) {
+            cardTraducir.setOnClickListener(v -> {
+                // TODO: Implementar navegación a la actividad de Traducir
+                android.widget.Toast.makeText(this, "Traducir - Próximamente", android.widget.Toast.LENGTH_SHORT).show();
+            });
+        }
     }
 
     private void styleToolbarTitle(Toolbar toolbar) {
