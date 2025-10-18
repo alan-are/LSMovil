@@ -75,10 +75,8 @@ public class AprenderActivity extends AppCompatActivity {
         });
 
         cardNumeros.setOnClickListener(v -> {
-            // TODO: Implementar navegación a módulo Números
-            Toast.makeText(AprenderActivity.this, 
-                "Módulo Números - Próximamente", 
-                Toast.LENGTH_SHORT).show();
+            // Navegar a módulo Números
+            startActivity(new Intent(AprenderActivity.this, NumerosActivity.class));
         });
 
         cardPalabras.setOnClickListener(v -> {

@@ -5,6 +5,12 @@
     <string name="default_web_client_id">729960099395-ks05fnipdh1vmu9efkvlked2uvq8ng1t.apps.googleusercontent.com</string>
     <string name="open_drawer">\n</string>
     <string name="close_drawer">\n</string>
+    <string name="acerca_de">LSMóvil es una aplicación de aprendizaje de Lenguaje de Señas Mexicano (LSM) de una forma práctica y divertida, consta de dos secciones principales: Traducir y Aprender.\nAprender: aprende el abecedario, los números naturales y algunas palabras comunes en LSM.\nTraducir: traduce señas del LSM en tiempo real desde tu cámara utiliazando inteligencia artificial.</string>
+    <string name="acerca">Acerca de la aplicación</string>
+    <string name="version_app">Versión 1.0.0</string>
+    <string name="nombre_app">LSMóvil</string>
+    <string name="devs">Alan Raul Arellano Gonzalez\nAlberto Leonel Mejía Hernández\nDiego Alejandro Guzmán Paniagua</string>
+    <string name="team">Equipo de Diseño y Desarrollo</string>
 
 
 </resources>

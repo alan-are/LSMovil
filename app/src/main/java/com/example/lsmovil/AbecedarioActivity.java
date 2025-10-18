@@ -79,9 +79,6 @@ public class AbecedarioActivity extends AppCompatActivity {
     private void cargarAbecedario() {
         letras = new ArrayList<>();
 
-        // Nota: Usar R.drawable.ic_school como placeholder hasta que tengas las imágenes reales
-        // Reemplaza ic_school con tus imágenes reales (ic_letra_a, ic_letra_b, etc.)
-
         letras.add(new Letra("A", 
             "La mano se cierra en un puño con el dedo pulgar apoyado en el costado del dedo índice.", 
             R.drawable.ic_letra_a));

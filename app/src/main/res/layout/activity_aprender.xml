@@ -139,7 +139,7 @@
                             <com.google.android.material.chip.Chip
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="26 letras"
+                                android:text="29 letras"
                                 android:textSize="12sp"
                                 style="@style/Widget.Material3.Chip.Assist"
                                 app:chipBackgroundColor="?attr/colorSecondaryContainer"

@@ -146,7 +146,7 @@
                                 android:gravity="center_vertical|end"
                                 android:text="TRADUCIR"
                                 android:textColor="?attr/colorOnSurface"
-                                android:textSize="50sp"
+                                android:textSize="36dp"
                                 android:textStyle="bold" />
 
                         </LinearLayout>
@@ -174,21 +174,22 @@
 
                             <TextView
                                 android:id="@+id/textView4"
-                                android:layout_width="wrap_content"
+                                android:layout_width="144dp"
                                 android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
                                 android:layout_weight="1"
                                 android:fontFamily="sans-serif-condensed-medium"
                                 android:gravity="center_vertical|start"
                                 android:text="APRENDER"
                                 android:textColor="@color/md_theme_dark_inverseOnSurface"
-                                android:textSize="50sp"
+                                android:textSize="36dp"
                                 android:textStyle="bold" />
 
                             <ImageView
                                 android:id="@+id/imageButton2"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="8dp"
                                 android:contentDescription="Aprender"
                                 android:scaleType="fitCenter"
                                 app:srcCompat="@drawable/ic_aprender" />

@@ -71,7 +71,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LSMovil"
+                    android:text="@string/nombre_app"
                     android:textSize="32sp"
                     android:textStyle="bold"
                     android:textColor="?attr/colorPrimary"
@@ -83,7 +83,7 @@
                     android:id="@+id/txtVersion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Versión 1.0.0"
+                    android:text="@string/version_app"
                     android:textSize="14sp"
                     android:textColor="?attr/colorOnSurfaceVariant"
                     android:fontFamily="sans-serif" />
@@ -108,7 +108,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Acerca de la aplicación"
+                        android:text="@string/acerca"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:textColor="?attr/colorOnPrimaryContainer"
@@ -118,7 +118,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="LSMovil es tu aplicación de confianza para gestionar tus necesidades diarias de manera eficiente y segura. Desarrollada con tecnología de vanguardia y pensada en la experiencia del usuario."
+                        android:text="@string/acerca_de"
                         android:textColor="?attr/colorOnPrimaryContainer"
                         android:textSize="15sp"
                         android:fontFamily="sans-serif"
@@ -178,7 +178,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Equipo de Desarrollo"
+                                android:text="@string/team"
                                 android:textSize="16sp"
                                 android:textStyle="bold"
                                 android:textColor="?attr/colorOnSurface"
@@ -187,7 +187,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Desarrolladores Android"
+                                android:text="@string/devs"
                                 android:textSize="14sp"
                                 android:textColor="?attr/colorOnSurfaceVariant"
                                 android:fontFamily="sans-serif" />
