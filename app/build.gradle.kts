@@ -44,9 +44,36 @@ android {
             keyPassword = "android"
         }
     }
+
+    packaging {
+        resources {
+            excludes += setOf("META-INF/DEPENDENCIES", "META-INF/LICENSE", "META-INF/LICENSE.txt", "META-INF/NOTICE", "META-INF/NOTICE.txt")
+        }
+        jniLibs {
+            useLegacyPackaging = false
+        }
+    }
+
+    androidResources {
+        noCompress += listOf("tflite", "lite")
+    }
+    
+    buildFeatures {
+        mlModelBinding = true
+        buildConfig = true
+    }
 }
 
 dependencies {
+
+    // TensorFlow Lite para detección LSM
+    implementation("org.tensorflow:tensorflow-lite:2.14.0")
+    implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
+    implementation("org.tensorflow:tensorflow-lite-gpu:2.14.0")
+    implementation("org.tensorflow:tensorflow-lite-task-vision:0.4.4")
+    
+    // OpenCV para procesamiento de imágenes
+    implementation(project(":openCVLibrary3413"))
 
     implementation(libs.play.services.base)
 

@@ -28,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.concurrent.atomic.AtomicReference;
 
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -166,12 +167,11 @@ public class Principal extends AppCompatActivity {
             });
         }
 
-        // Configurar click listener para el botón/card de Traducir (si existe)
+        // Configurar click listener para el botón/card de Traducir
         com.google.android.material.card.MaterialCardView cardTraducir = findViewById(R.id.cardTraducir);
         if (cardTraducir != null) {
             cardTraducir.setOnClickListener(v -> {
-                // TODO: Implementar navegación a la actividad de Traducir
-                android.widget.Toast.makeText(this, "Traducir - Próximamente", android.widget.Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Principal.this, TraducirActivity.class));
             });
         }
     }

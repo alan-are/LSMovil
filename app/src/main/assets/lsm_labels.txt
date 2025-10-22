@@ -1,0 +1,8 @@
+0 Letra A
+1 Letra E
+2 Letra I
+3 Letra O
+4 Letra U
+5 Numero 1
+6 Numero 2
+7 Numero 3
