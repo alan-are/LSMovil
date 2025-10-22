@@ -39,8 +39,8 @@ public class LSMDetector {
     /**
      * Constructor del detector LSM
      * @param assetManager AssetManager de la aplicación
-     * @param modelPath Ruta del modelo en assets (ej: "lsm_model.tflite")
-     * @param labelPath Ruta de las etiquetas en assets (ej: "lsm_labels.txt")
+     * @param modelPath Ruta del modelo en assets (ej: "model.tflite")
+     * @param labelPath Ruta de las etiquetas en assets (ej: "labels.txt")
      */
     public LSMDetector(AssetManager assetManager, String modelPath, String labelPath) throws IOException {
         Log.d(TAG, "Inicializando LSMDetector...");
@@ -90,7 +90,7 @@ public class LSMDetector {
     /**
      * Reconoce la seña en el frame de la cámara
      * @param mat_image Frame de OpenCV en formato Mat
-     * @return Mat con el texto de la seña detectada
+     * @return Mat sin modificaciones (solo procesa la detección)
      */
     public Mat recognizeImage(Mat mat_image) {
         try {
@@ -140,98 +140,6 @@ public class LSMDetector {
             // Log para debugging
             Log.d(TAG, "Detección: " + lastDetectedSign + " - Confianza: " + String.format("%.2f", maxConfidence * 100) + "%");
             
-            // Mostrar TODAS las probabilidades en el log para debugging
-            StringBuilder allScores = new StringBuilder("Todas las clases: ");
-            for (int i = 0; i < labelList.size(); i++) {
-                float confidence = (output[0][i] & 0xFF) / 255.0f;
-                allScores.append(labelList.get(i)).append(": ").append(String.format("%.1f%%", confidence * 100)).append(", ");
-            }
-            Log.d(TAG, allScores.toString());
-            
-            // Dibujar resultado en el frame con umbral balanceado (50%)
-            if (maxConfidence > 0.5f) {
-                // Definir puntos del rectángulo para el texto
-                org.opencv.core.Point topLeft = new org.opencv.core.Point(10, 10);
-                org.opencv.core.Point bottomRight = new org.opencv.core.Point(
-                    mat_image.cols() - 10, 
-                    150
-                );
-                
-                // Dibujar rectángulo semi-transparente para el texto (fondo)
-                org.opencv.imgproc.Imgproc.rectangle(
-                    mat_image,
-                    topLeft,
-                    bottomRight,
-                    new org.opencv.core.Scalar(0, 0, 0, 200),
-                    -1
-                );
-                
-                // Dibujar borde del rectángulo (verde si >80%, amarillo si >65%, naranja si >50%)
-                org.opencv.core.Scalar borderColor;
-                if (maxConfidence > 0.8f) {
-                    borderColor = new org.opencv.core.Scalar(0, 255, 0, 255); // Verde - Excelente
-                } else if (maxConfidence > 0.65f) {
-                    borderColor = new org.opencv.core.Scalar(0, 255, 255, 255); // Amarillo - Bueno
-                } else {
-                    borderColor = new org.opencv.core.Scalar(0, 165, 255, 255); // Naranja - Aceptable
-                }
-                
-                org.opencv.imgproc.Imgproc.rectangle(
-                    mat_image,
-                    topLeft,
-                    bottomRight,
-                    borderColor,
-                    4
-                );
-                
-                // Texto de la seña detectada (más grande)
-                String displayText = lastDetectedSign;
-                org.opencv.imgproc.Imgproc.putText(
-                    mat_image,
-                    displayText,
-                    new org.opencv.core.Point(20, 70),
-                    org.opencv.core.Core.FONT_HERSHEY_SIMPLEX,
-                    2.0,
-                    borderColor,
-                    4
-                );
-                
-                // Texto de confianza
-                String confidenceText = String.format("Confianza: %.0f%%", maxConfidence * 100);
-                org.opencv.imgproc.Imgproc.putText(
-                    mat_image,
-                    confidenceText,
-                    new org.opencv.core.Point(20, 120),
-                    org.opencv.core.Core.FONT_HERSHEY_SIMPLEX,
-                    1.0,
-                    new org.opencv.core.Scalar(255, 255, 255, 255),
-                    2
-                );
-            } else {
-                // Mostrar mensaje de "Esperando seña..." incluso con baja confianza
-                org.opencv.imgproc.Imgproc.putText(
-                    mat_image,
-                    "Muestra una sena...",
-                    new org.opencv.core.Point(20, 70),
-                    org.opencv.core.Core.FONT_HERSHEY_SIMPLEX,
-                    1.5,
-                    new org.opencv.core.Scalar(255, 255, 0, 255),
-                    3
-                );
-                
-                // Mostrar la mejor predicción aunque sea baja
-                String debugText = String.format("%s: %.0f%%", lastDetectedSign, maxConfidence * 100);
-                org.opencv.imgproc.Imgproc.putText(
-                    mat_image,
-                    debugText,
-                    new org.opencv.core.Point(20, 120),
-                    org.opencv.core.Core.FONT_HERSHEY_SIMPLEX,
-                    0.8,
-                    new org.opencv.core.Scalar(200, 200, 200, 255),
-                    2
-                );
-            }
-            
             // Liberar el bitmap escalado
             scaledBitmap.recycle();
             
@@ -240,6 +148,7 @@ public class LSMDetector {
             e.printStackTrace();
         }
         
+        // Retornar frame sin modificaciones (la UI se maneja en la Activity)
         return mat_image;
     }
     
