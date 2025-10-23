@@ -5,7 +5,7 @@
 5    android:versionName="3.4.13" >
 6
 7    <uses-sdk android:minSdkVersion="24" />
-7-->C:\Users\PC\Desktop\Modular\LSMovil\openCVLibrary3413\src\main\AndroidManifest.xml:6:5-73
-7-->C:\Users\PC\Desktop\Modular\LSMovil\openCVLibrary3413\src\main\AndroidManifest.xml:6:15-40
+7-->C:\Users\Joel Cervantes\StudioProjects\LSMovil\openCVLibrary3413\src\main\AndroidManifest.xml:6:5-73
+7-->C:\Users\Joel Cervantes\StudioProjects\LSMovil\openCVLibrary3413\src\main\AndroidManifest.xml:6:15-40
 8
 9</manifest>

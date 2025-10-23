@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Using: C:\Users\PC\AppData\Local\Android\Sdk\build-tools\35.0.0\aidl.exe -pC:\Users\PC\AppData\Local\Android\Sdk\platforms\android-35\framework.aidl -oC:\Users\PC\Desktop\Modular\LSMovil\openCVLibrary3413\build\generated\aidl_source_output_dir\debug\out -IC:\Users\PC\Desktop\Modular\LSMovil\openCVLibrary3413\src\main\aidl -IC:\Users\PC\Desktop\Modular\LSMovil\openCVLibrary3413\src\debug\aidl -dC:\Users\PC\AppData\Local\Temp\aidl9824466381629540066.d C:\Users\PC\Desktop\Modular\LSMovil\openCVLibrary3413\src\main\aidl\org\opencv\engine\OpenCVEngineInterface.aidl
+ * Using: C:\Android\Sdk\build-tools\35.0.0\aidl.exe -pC:\Android\Sdk\platforms\android-35\framework.aidl -oC:\Users\Joel\ Cervantes\StudioProjects\LSMovil\openCVLibrary3413\build\generated\aidl_source_output_dir\debug\out -IC:\Users\Joel\ Cervantes\StudioProjects\LSMovil\openCVLibrary3413\src\main\aidl -IC:\Users\Joel\ Cervantes\StudioProjects\LSMovil\openCVLibrary3413\src\debug\aidl -dC:\Users\JOELCE~1\AppData\Local\Temp\aidl6324533077542986702.d C:\Users\Joel\ Cervantes\StudioProjects\LSMovil\openCVLibrary3413\src\main\aidl\org\opencv\engine\OpenCVEngineInterface.aidl
  */
 package org.opencv.engine;
 /** Class provides a Java interface for OpenCV Engine Service. It's synchronous with native OpenCVEngine class. */
