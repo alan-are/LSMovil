@@ -4,13 +4,14 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +21,7 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -31,47 +32,37 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
- * Actividad para traducir señas LSM en tiempo real (modo landscape con gamificación)
+ * Actividad para traducir señas LSM en tiempo real (modo portrait)
  * Usa la cámara y el modelo TensorFlow Lite para detectar señas
  */
 public class TraducirActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
     private static final String TAG = "TraducirActivity";
     private static final int CAMERA_PERMISSION_REQUEST = 100;
+    private static final long DISPLAY_DURATION_MS = 2000; // 2 segundos para mostrar la detección
     
     private Mat mRgba;
     private Mat mGray;
     private CameraBridgeViewBase mOpenCvCameraView;
     private LSMDetector lsmDetector;
     
-    // UI Material Design 3
+    // UI Material Design 3 para mostrar detección
     private MaterialCardView detectionCard;
-    private TextView tvDetectedSign;
-    private TextView tvConfidence;
-    private LinearProgressIndicator progressConfidence;
+    private ImageView ivSignImage;
+    private TextView tvSignLabel;
     private MaterialButton btnBack;
+    private FloatingActionButton btnSwitchCamera;
     
-    // UI Gamificación
-    private TextView tvDetectionsCount;
-    private TextView tvStreakCount;
-    private TextView tvScore;
-    private TextView tvAvgConfidence;
-    private LinearLayout historyContainer;
-    private TextView tvEmptyHistory;
+    // Control de cámara
+    private int currentCameraId = CameraBridgeViewBase.CAMERA_ID_BACK;
     
-    // Sistema de gamificación
-    private int totalDetections = 0;
-    private int currentStreak = 0;
-    private int maxStreak = 0;
-    private int totalScore = 0;
-    private float totalConfidenceSum = 0f;
-    private String lastDetectedSign = "";
-    private long lastDetectionTime = 0;
-    private static final long STREAK_TIMEOUT_MS = 3000; // 3 segundos para mantener racha
-    private Set<String> uniqueSignsDetected = new HashSet<>();
+    // Control de visualización temporal
+    private Handler hideHandler = new Handler(Looper.getMainLooper());
+    private Runnable hideRunnable;
+    private String lastShownSign = "";
+    private long lastShowTime = 0;
+    
     
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -118,30 +109,23 @@ public class TraducirActivity extends AppCompatActivity implements CameraBridgeV
         mOpenCvCameraView = findViewById(R.id.camera_view);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
+        mOpenCvCameraView.setCameraIndex(currentCameraId); // Configurar cámara inicial
         
-        // UI Material Design 3 - Detección
+        // UI Material Design 3 - Card de detección
         detectionCard = findViewById(R.id.detection_card);
-        tvDetectedSign = findViewById(R.id.tv_detected_sign);
-        tvConfidence = findViewById(R.id.tv_confidence);
-        progressConfidence = findViewById(R.id.progress_confidence);
-        
-        // UI Gamificación
-        tvDetectionsCount = findViewById(R.id.tv_detections_count);
-        tvStreakCount = findViewById(R.id.tv_streak_count);
-        tvScore = findViewById(R.id.tv_score);
-        tvAvgConfidence = findViewById(R.id.tv_avg_confidence);
-        historyContainer = findViewById(R.id.history_container);
-        tvEmptyHistory = findViewById(R.id.tv_empty_history);
+        ivSignImage = findViewById(R.id.iv_sign_image);
+        tvSignLabel = findViewById(R.id.tv_sign_label);
         
         // Inicialmente ocultar la card
         detectionCard.setVisibility(View.GONE);
         
         // Botón de regreso
         btnBack = findViewById(R.id.btn_back);
-        btnBack.setOnClickListener(v -> {
-            showSessionSummary();
-            finish();
-        });
+        btnBack.setOnClickListener(v -> finish());
+        
+        // Botón para cambiar de cámara
+        btnSwitchCamera = findViewById(R.id.btn_switch_camera);
+        btnSwitchCamera.setOnClickListener(v -> switchCamera());
         
         // Inicializar detector LSM
         try {
@@ -151,7 +135,7 @@ public class TraducirActivity extends AppCompatActivity implements CameraBridgeV
                 "labels.txt"
             );
             Log.d(TAG, "Detector LSM inicializado correctamente");
-            Toast.makeText(this, "✨ Detector LSM listo - ¡Modo Landscape!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "✨ Detector LSM listo", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             Log.e(TAG, "Error al cargar modelo LSM: " + e.getMessage());
             e.printStackTrace();
@@ -180,6 +164,33 @@ public class TraducirActivity extends AppCompatActivity implements CameraBridgeV
         }
     }
     
+    /**
+     * Cambia entre cámara trasera y delantera
+     */
+    private void switchCamera() {
+        if (mOpenCvCameraView != null) {
+            // Deshabilitar la vista actual
+            mOpenCvCameraView.disableView();
+            
+            // Cambiar el ID de la cámara
+            if (currentCameraId == CameraBridgeViewBase.CAMERA_ID_BACK) {
+                currentCameraId = CameraBridgeViewBase.CAMERA_ID_FRONT;
+                Toast.makeText(this, "📷 Cámara delantera", Toast.LENGTH_SHORT).show();
+            } else {
+                currentCameraId = CameraBridgeViewBase.CAMERA_ID_BACK;
+                Toast.makeText(this, "📷 Cámara trasera", Toast.LENGTH_SHORT).show();
+            }
+            
+            // Configurar el nuevo índice de cámara
+            mOpenCvCameraView.setCameraIndex(currentCameraId);
+            
+            // Habilitar la vista con la nueva cámara
+            mOpenCvCameraView.enableView();
+            
+            Log.d(TAG, "Cámara cambiada a: " + (currentCameraId == CameraBridgeViewBase.CAMERA_ID_FRONT ? "Frontal" : "Trasera"));
+        }
+    }
+    
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -188,6 +199,11 @@ public class TraducirActivity extends AppCompatActivity implements CameraBridgeV
         }
         if (lsmDetector != null) {
             lsmDetector.close();
+        }
+        
+        // Limpiar handlers
+        if (hideRunnable != null) {
+            hideHandler.removeCallbacks(hideRunnable);
         }
     }
     
@@ -212,15 +228,16 @@ public class TraducirActivity extends AppCompatActivity implements CameraBridgeV
         mRgba = inputFrame.rgba();
         mGray = inputFrame.gray();
         
-        // IMPORTANTE: Rotar frame 90° para landscape (el modelo funciona mejor así)
-        Mat rotatedFrame = new Mat();
-        Core.rotate(mRgba, rotatedFrame, Core.ROTATE_90_CLOCKWISE);
+        // Si es cámara frontal, voltear horizontalmente para efecto espejo
+        if (currentCameraId == CameraBridgeViewBase.CAMERA_ID_FRONT) {
+            Core.flip(mRgba, mRgba, 1); // 1 = flip horizontal (espejo)
+        }
         
-        // Procesar frame rotado con el detector LSM
+        // Procesar frame directamente (modo portrait, sin rotación)
         if (lsmDetector != null) {
             try {
-                // Crear una copia del frame rotado para procesamiento
-                Mat frameToProcess = rotatedFrame.clone();
+                // Crear una copia del frame para procesamiento
+                Mat frameToProcess = mRgba.clone();
                 
                 // El detector procesa el frame
                 lsmDetector.recognizeImage(frameToProcess);
@@ -231,7 +248,6 @@ public class TraducirActivity extends AppCompatActivity implements CameraBridgeV
                 
                 runOnUiThread(() -> {
                     updateDetectionUI(detectedSign, confidence);
-                    updateGamificationStats(detectedSign, confidence);
                 });
                 
                 // Liberar la copia
@@ -241,208 +257,134 @@ public class TraducirActivity extends AppCompatActivity implements CameraBridgeV
             }
         }
         
-        // Liberar frame rotado
-        rotatedFrame.release();
-        
-        // Retornar el frame original sin modificar (para evitar crash)
+        // Retornar el frame (espejado si es frontal)
         return mRgba;
     }
     
     /**
      * Actualiza la UI con Material Design 3 para mostrar la detección
+     * Muestra la imagen de la seña y un label con el nombre
      */
     private void updateDetectionUI(String sign, float confidence) {
-        // Solo mostrar detecciones con confianza > 50% y no sea "Fondo"
-        if (confidence > 0.5f && !sign.equalsIgnoreCase("Fondo")) {
-            // Mostrar card con animación suave
-            if (detectionCard.getVisibility() != View.VISIBLE) {
-                detectionCard.setVisibility(View.VISIBLE);
-                detectionCard.setAlpha(0f);
-                detectionCard.animate()
-                    .alpha(1f)
-                    .setDuration(200)
-                    .start();
-            }
+        // Log para debug
+        Log.d(TAG, "updateDetectionUI - Sign: '" + sign + "', Confidence: " + (confidence * 100) + "%");
+        
+        // Solo mostrar detecciones con confianza > 80% y no sea "Fondo"
+        if (confidence > 0.9f && !sign.contains("Fondo")) {
             
-            // Actualizar texto de la seña detectada
-            tvDetectedSign.setText(sign);
-            
-            // Actualizar porcentaje de confianza
-            int confidencePercent = (int) (confidence * 100);
-            tvConfidence.setText(confidencePercent + "%");
-            
-            // Actualizar progress bar
-            progressConfidence.setProgress(confidencePercent);
-            
-            // Cambiar color según confianza
-            int colorRes;
-            if (confidence > 0.8f) {
-                // Verde - Excelente
-                colorRes = com.google.android.material.R.attr.colorTertiary;
-            } else if (confidence > 0.65f) {
-                // Amarillo - Bueno (usar secondary)
-                colorRes = com.google.android.material.R.attr.colorSecondary;
-            } else {
-                // Naranja - Aceptable (usar error)
-                colorRes = com.google.android.material.R.attr.colorError;
-            }
-            
-            // Aplicar color al indicador
-            progressConfidence.setIndicatorColor(getColorFromAttr(colorRes));
-            
-        } else {
-            // Ocultar card con animación
-            if (detectionCard.getVisibility() == View.VISIBLE) {
-                detectionCard.animate()
-                    .alpha(0f)
-                    .setDuration(200)
-                    .withEndAction(() -> detectionCard.setVisibility(View.GONE))
-                    .start();
-            }
-        }
-    }
-    
-    /**
-     * Sistema de gamificación: actualiza estadísticas y puntuación
-     */
-    private void updateGamificationStats(String sign, float confidence) {
-        // Solo contar detecciones válidas (no "Fondo" y confianza > 60%)
-        if (sign.equalsIgnoreCase("Fondo") || confidence < 0.6f) {
-            // Resetear racha si pasa el timeout
+            // Verificar si es una seña soportada y si no se mostró recientemente
+            int imageRes = getSignImageResource(sign);
             long currentTime = System.currentTimeMillis();
-            if (currentTime - lastDetectionTime > STREAK_TIMEOUT_MS) {
-                currentStreak = 0;
-                tvStreakCount.setText("0");
-            }
-            return;
-        }
-        
-        long currentTime = System.currentTimeMillis();
-        
-        // Verificar si es una detección nueva (no repetir la misma seña consecutivamente)
-        if (!sign.equals(lastDetectedSign) || (currentTime - lastDetectionTime) > 1000) {
             
-            // Incrementar contador total
-            totalDetections++;
-            tvDetectionsCount.setText(String.valueOf(totalDetections));
+            Log.d(TAG, "Image resource: " + imageRes + ", last shown: " + lastShownSign);
             
-            // Actualizar racha
-            if (currentTime - lastDetectionTime <= STREAK_TIMEOUT_MS && totalDetections > 1) {
-                currentStreak++;
-            } else {
-                currentStreak = 1;
-            }
-            
-            if (currentStreak > maxStreak) {
-                maxStreak = currentStreak;
-            }
-            
-            tvStreakCount.setText(String.valueOf(currentStreak));
-            
-            // Calcular puntuación (confianza * multiplicador de racha)
-            int streakMultiplier = Math.min(currentStreak, 10); // Max 10x
-            int points = (int) (confidence * 100 * streakMultiplier);
-            totalScore += points;
-            tvScore.setText(String.valueOf(totalScore));
-            
-            // Actualizar promedio de confianza
-            totalConfidenceSum += confidence;
-            float avgConfidence = totalConfidenceSum / totalDetections;
-            tvAvgConfidence.setText(String.format("%d%%", (int)(avgConfidence * 100)));
-            
-            // Agregar a historial si es una seña única nueva
-            if (uniqueSignsDetected.add(sign)) {
-                addSignToHistory(sign, confidence);
-            }
-            
-            // Actualizar última detección
-            lastDetectedSign = sign;
-            lastDetectionTime = currentTime;
-            
-            // Animación de celebración para rachas altas
-            if (currentStreak % 5 == 0 && currentStreak > 0) {
-                showStreakCelebration(currentStreak);
+            if (imageRes != -1 && (!sign.equals(lastShownSign) || (currentTime - lastShowTime) > 3000)) {
+                // Cancelar cualquier ocultamiento pendiente
+                if (hideRunnable != null) {
+                    hideHandler.removeCallbacks(hideRunnable);
+                }
+                
+                // Actualizar la imagen
+                ivSignImage.setImageResource(imageRes);
+                
+                // Actualizar el texto
+                String label = getSignLabel(sign);
+                tvSignLabel.setText(label);
+                
+                // Mostrar card con animación
+                if (detectionCard.getVisibility() != View.VISIBLE) {
+                    detectionCard.setVisibility(View.VISIBLE);
+                    detectionCard.setAlpha(0f);
+                    detectionCard.setScaleX(0.8f);
+                    detectionCard.setScaleY(0.8f);
+                    detectionCard.animate()
+                        .alpha(1f)
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(300)
+                        .start();
+                }
+                
+                // Actualizar última seña mostrada
+                lastShownSign = sign;
+                lastShowTime = currentTime;
+                
+                Log.i(TAG, "✨ Mostrando seña: " + label);
+                
+                // Programar ocultamiento después de DISPLAY_DURATION_MS
+                hideRunnable = () -> {
+                    if (detectionCard.getVisibility() == View.VISIBLE) {
+                        detectionCard.animate()
+                            .alpha(0f)
+                            .scaleX(0.8f)
+                            .scaleY(0.8f)
+                            .setDuration(300)
+                            .withEndAction(() -> detectionCard.setVisibility(View.GONE))
+                            .start();
+                    }
+                };
+                hideHandler.postDelayed(hideRunnable, DISPLAY_DURATION_MS);
             }
         }
     }
     
     /**
-     * Agrega una seña al historial visual
+     * Obtiene el recurso de imagen para una seña específica
+     * @param sign Nombre de la seña (ej: "0 Letra A", "5 Numero 1")
+     * @return ID del recurso drawable o -1 si no está soportada
      */
-    private void addSignToHistory(String sign, float confidence) {
-        // Ocultar mensaje de historial vacío
-        if (tvEmptyHistory != null) {
-            tvEmptyHistory.setVisibility(View.GONE);
+    private int getSignImageResource(String sign) {
+        // Las etiquetas vienen en formato "0 Letra A", "5 Numero 1", etc.
+        // Necesitamos extraer la letra o número
+        String signUpper = sign.toUpperCase().trim();
+        
+        Log.d(TAG, "getSignImageResource - Input: '" + sign + "', Upper: '" + signUpper + "'");
+        
+        // Mapeo basado en el formato del labels.txt
+        if (signUpper.contains("LETRA A")) {
+            return R.drawable.ic_letra_a;
+        } else if (signUpper.contains("LETRA E")) {
+            return R.drawable.ic_letra_e;
+        } else if (signUpper.contains("LETRA I")) {
+            return R.drawable.ic_letra_i;
+        } else if (signUpper.contains("LETRA O")) {
+            return R.drawable.ic_letra_o;
+        } else if (signUpper.contains("LETRA U")) {
+            return R.drawable.ic_letra_u;
+        } else if (signUpper.contains("NUMERO 1")) {
+            return R.drawable.ic_num_1;
+        } else if (signUpper.contains("NUMERO 2")) {
+            return R.drawable.ic_num_2;
+        } else if (signUpper.contains("NUMERO 3")) {
+            return R.drawable.ic_num_3;
         }
         
-        // Crear chip de seña detectada
-        TextView signChip = new TextView(this);
-        signChip.setText(sign + " ✓");
-        signChip.setTextSize(14);
-        signChip.setTextColor(getColorFromAttr(com.google.android.material.R.attr.colorOnSecondaryContainer));
-        signChip.setBackgroundResource(android.R.drawable.dialog_holo_light_frame);
-        signChip.setPadding(24, 12, 24, 12);
-        
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        params.setMargins(0, 0, 0, 8);
-        signChip.setLayoutParams(params);
-        
-        // Agregar al inicio del historial
-        historyContainer.addView(signChip, 0);
+        Log.w(TAG, "Seña no soportada: " + sign);
+        return -1; // Seña no soportada
     }
     
     /**
-     * Muestra una celebración por racha alta
+     * Obtiene el label (texto) para mostrar según la seña
+     * @param sign Nombre de la seña (ej: "0 Letra A", "5 Numero 1")
+     * @return Texto formateado (ej: "Letra A", "Número 1")
      */
-    private void showStreakCelebration(int streak) {
-        String message = "";
-        if (streak == 5) {
-            message = "🔥 ¡Racha de 5! ¡Sigue así!";
-        } else if (streak == 10) {
-            message = "⚡ ¡RACHA DE 10! ¡INCREÍBLE!";
-        } else if (streak >= 15) {
-            message = "🌟 ¡ERES UN MAESTRO LSM! 🌟";
+    private String getSignLabel(String sign) {
+        // Extraer solo la parte después del número
+        // Formato: "0 Letra A" -> "Letra A"
+        // Formato: "5 Numero 1" -> "Número 1"
+        String label = sign.trim();
+        
+        // Eliminar el número inicial y el espacio
+        if (label.matches("^\\d+\\s+.*")) {
+            label = label.replaceFirst("^\\d+\\s+", "");
         }
         
-        if (!message.isEmpty()) {
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        }
-    }
-    
-    /**
-     * Muestra un resumen de la sesión al salir
-     */
-    private void showSessionSummary() {
-        if (totalDetections > 0) {
-            float avgConfidence = totalConfidenceSum / totalDetections;
-            String summary = String.format(
-                "📊 Resumen de Sesión\n\n" +
-                "✅ Señas detectadas: %d\n" +
-                "🔥 Racha máxima: %d\n" +
-                "⭐ Puntuación total: %d\n" +
-                "📈 Precisión promedio: %d%%\n" +
-                "🎯 Señas únicas: %d",
-                totalDetections,
-                maxStreak,
-                totalScore,
-                (int)(avgConfidence * 100),
-                uniqueSignsDetected.size()
-            );
-            
-            Toast.makeText(this, summary, Toast.LENGTH_LONG).show();
-        }
-    }
-    
-    /**
-     * Obtiene un color desde un atributo del tema
-     */
-    private int getColorFromAttr(int attrColor) {
-        android.util.TypedValue typedValue = new android.util.TypedValue();
-        getTheme().resolveAttribute(attrColor, typedValue, true);
-        return typedValue.data;
+        // Reemplazar "Numero" por "Número" (con tilde)
+        label = label.replace("Numero", "Número");
+        
+        Log.d(TAG, "getSignLabel - Input: '" + sign + "', Output: '" + label + "'");
+        
+        return label;
     }
     
     @Override
