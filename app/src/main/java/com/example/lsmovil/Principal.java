@@ -170,8 +170,7 @@ public class Principal extends AppCompatActivity {
         com.google.android.material.card.MaterialCardView cardTraducir = findViewById(R.id.cardTraducir);
         if (cardTraducir != null) {
             cardTraducir.setOnClickListener(v -> {
-                // TODO: Implementar navegación a la actividad de Traducir
-                android.widget.Toast.makeText(this, "Traducir - Próximamente", android.widget.Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Principal.this, TraducirActivity.class));
             });
         }
     }
@@ -209,6 +208,5 @@ public class Principal extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Aquí puedes recargar datos si es necesario cuando la actividad se reanude
     }
 }

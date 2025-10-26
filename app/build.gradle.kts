@@ -69,7 +69,20 @@ dependencies {
     implementation(libs.credentials)
     implementation(libs.credentials.play.services.auth)
     implementation(libs.googleid)
+    implementation(libs.cardview)
+    implementation(libs.legacy.support.v4)
+    implementation(libs.camera.core)
+    implementation(libs.camera.lifecycle)
+    implementation(libs.camera.view)
     annotationProcessor(libs.glide.compiler)
+    annotationProcessor(libs.camera.core)
+
+    val cameraxVersion = "1.3.1"
+
+    implementation("androidx.camera:camera-core:$cameraxVersion")
+    implementation("androidx.camera:camera-camera2:$cameraxVersion")
+    implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
+    implementation("androidx.camera:camera-view:$cameraxVersion")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
