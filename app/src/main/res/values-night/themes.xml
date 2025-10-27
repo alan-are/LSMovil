@@ -2,6 +2,9 @@
     <!-- Tema oscuro Material Design 3 -->
     <style name="Base.Theme.App" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Colores principales Material 3 - Modo Oscuro -->
+
+        <item name="colorControlNormal">@android:color/white</item>
+
         <item name="colorPrimary">@color/md_theme_dark_primary</item>
         <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>

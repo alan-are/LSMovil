@@ -195,11 +195,11 @@ public class Principal extends AppCompatActivity {
 
         spannableString.setSpan(
                 new StyleSpan(Typeface.BOLD),
-                0, 7, // Solo aplica a "LS"
+                0, 7,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         );
 
-        // Establecer el título estilizado
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(spannableString);
         }
