@@ -34,8 +34,9 @@ import org.opencv.core.Mat;
 import java.io.IOException;
 
 /**
- * Actividad para traducir señas LSM en tiempo real (modo portrait)
- * Usa la cámara y el modelo TensorFlow Lite para detectar señas
+ * Actividad para traducir señas LSM en tiempo real (modo landscape)
+ * Usa la cámara en formato cuadrado y el modelo TensorFlow Lite para detectar señas
+ * Layout optimizado: cámara cuadrada a la izquierda, detección a la derecha
  */
 public class TraducirActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
     private static final String TAG = "TraducirActivity";
@@ -85,13 +86,8 @@ public class TraducirActivity extends AppCompatActivity implements CameraBridgeV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // Configurar pantalla completa
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // Configurar pantalla (mantener encendida, sin cambiar a fullscreen)
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        getWindow().setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        );
         
         setContentView(R.layout.activity_traducir);
         
@@ -233,7 +229,7 @@ public class TraducirActivity extends AppCompatActivity implements CameraBridgeV
             Core.flip(mRgba, mRgba, 1); // 1 = flip horizontal (espejo)
         }
         
-        // Procesar frame directamente (modo portrait, sin rotación)
+        // Procesar frame directamente (modo landscape con vista cuadrada)
         if (lsmDetector != null) {
             try {
                 // Crear una copia del frame para procesamiento
