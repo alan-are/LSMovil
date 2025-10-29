@@ -19,5 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "app"
+rootProject.name = "LSMovil"
 include(":app")
+include(":openCVLibrary3413")
