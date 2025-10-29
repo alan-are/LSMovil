@@ -13,3 +13,16 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Firebase sensitive files
+app/google-services.json
+google-services.json
+**/google-services.json
+
+# Firebase local emulator data
+.firebase/
+
+# API Keys and secrets
+*.keystore
+*.jks
+!debug.keystore
