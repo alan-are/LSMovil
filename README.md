@@ -4,9 +4,10 @@ Aplicación móvil Android educativa para el aprendizaje de **Lenguaje de Señas
 
 ## 📋 Descripción
 
-**LSMovil** es una aplicación Android moderna que combina educación interactiva e inteligencia artificial para facilitar el aprendizaje del Lenguaje de Señas Mexicano (LSM). Desarrollada completamente en **Java** con arquitectura basada en Activities, la aplicación ofrece dos modos principales:
+**LSMovil** es una aplicación Android moderna que combina educación interactiva e inteligencia artificial para facilitar el aprendizaje del Lenguaje de Señas Mexicano (LSM). Desarrollada completamente en **Java** con arquitectura basada en Activities, la aplicación ofrece tres modos principales:
 
 - **🎓 Aprender**: Módulo educativo con el abecedario LSM completo (27 letras incluyendo LL, Ñ, RR) y números del 0 al 10, con imágenes en formato WebP optimizado y descripciones detalladas para cada seña.
+- **✨ Practicar**: Modo de práctica interactivo con validación en tiempo real usando la cámara. El usuario debe repetir correctamente la seña 3 veces, manteniéndola durante 5 segundos con una confianza del 90% para cada repetición. Disponible para vocales (A, E, I, O, U) y números (1, 2, 3).
 - **🤖 Traducir**: Detector de señas LSM en tiempo real usando TensorFlow Lite (modelo cuantizado) y OpenCV, capaz de reconocer 5 vocales (A, E, I, O, U) y 3 números (1, 2, 3) con precisión superior al 90%.
 
 Además, cuenta con un sistema robusto de autenticación mediante Firebase (email/password y Google Sign-In), gestión de perfiles de usuario en Cloud Firestore, y una interfaz moderna siguiendo las guías de Material Design 3 con edge-to-edge UI.
@@ -24,6 +25,16 @@ Además, cuenta con un sistema robusto de autenticación mediante Firebase (emai
   - Números del 0 al 10 en Lenguaje de Señas Mexicano
   - Instrucciones paso a paso para cada número
   - Visualización ampliada con diálogos detallados
+
+- **✨ Modo Práctica con Cámara (NUEVO)**
+  - Práctica interactiva de señas con validación en tiempo real
+  - Sistema de repeticiones: 3 repeticiones de 5 segundos cada una
+  - Validación con IA: confianza mínima del 90%
+  - Feedback visual en tiempo real con barra de progreso
+  - Contador de progreso (0/3, 1/3, 2/3, 3/3)
+  - Disponible para vocales (A, E, I, O, U) y números (1, 2, 3)
+  - Orientación landscape optimizada para práctica
+  - Mensajes de felicitación al completar exitosamente
 
 ### 🤖 Módulo Traducir (IA en Tiempo Real)
 - **Detección de Señas con IA**
@@ -190,6 +201,7 @@ LSMovil/
 │   │   │   │   ├── AbecedarioActivity.java        # Grid de 27 letras LSM (RecyclerView)
 │   │   │   │   ├── NumerosActivity.java           # Grid de números 0-10 LSM (RecyclerView)
 │   │   │   │   ├── TraducirActivity.java          # Detector IA en tiempo real (landscape)
+│   │   │   │   ├── PracticarActivity.java         # ✨ Modo práctica con validación (landscape) NUEVO
 │   │   │   │   ├── LSMDetector.java               # Clase de detección con TensorFlow Lite
 │   │   │   │   ├── Letra.java                     # Modelo POJO para letras
 │   │   │   │   ├── LetraAdapter.java              # RecyclerView Adapter con ViewHolder
@@ -201,7 +213,10 @@ LSMovil/
 │   │   │   ├── res/
 │   │   │   │   ├── layout/                        # 20+ archivos XML con Material Design 3
 │   │   │   │   │   ├── activity_traducir.xml      # Layout landscape con cámara + detección
+│   │   │   │   │   ├── activity_practicar.xml     # ✨ Layout landscape para modo práctica NUEVO
 │   │   │   │   │   ├── activity_principal.xml     # DrawerLayout con NavigationView
+│   │   │   │   │   ├── dialog_letra_detalle.xml   # Diálogo con detalles + botón Practicar
+│   │   │   │   │   ├── dialog_numero_detalle.xml  # Diálogo con detalles + botón Practicar
 │   │   │   │   │   ├── item_letra.xml             # Card layout para letras
 │   │   │   │   │   └── item_numero.xml            # Card layout para números
 │   │   │   │   ├── drawable/                      # Recursos gráficos vectoriales e imágenes
@@ -432,7 +447,9 @@ AprenderActivity (Hub educativo)
 │       ├─ Mostrar imagen ampliada (ImageView)
 │       ├─ Mostrar nombre de la letra (TextView)
 │       ├─ Mostrar descripción detallada (TextView scrollable)
-│       └─ Botón "Cerrar" para dismiss
+│       ├─ Botón "Cerrar" para dismiss
+│       └─ ✨ Botón "Practicar con Cámara" (NUEVO)
+│           └─ Lanza PracticarActivity con datos de la letra
 │
 └─ NumerosActivity
     ├─ RecyclerView con GridLayoutManager (3 columnas)
@@ -444,7 +461,72 @@ AprenderActivity (Hub educativo)
         ├─ Mostrar imagen ampliada (ImageView)
         ├─ Mostrar número (TextView)
         ├─ Mostrar descripción de cómo realizar la seña (TextView)
-        └─ Botón "Cerrar" para dismiss
+        ├─ Botón "Cerrar" para dismiss
+        └─ ✨ Botón "Practicar con Cámara" (NUEVO)
+            └─ Lanza PracticarActivity con datos del número
+```
+
+### ✨ Flujo del Modo Práctica (NUEVO)
+```
+AbecedarioActivity o NumerosActivity
+    ↓
+Click en "Practicar con Cámara" desde diálogo de detalle
+    ↓
+PracticarActivity (Landscape)
+    ├─ Recibir datos por Intent:
+    │   ├─ tipo: "letra" o "numero"
+    │   ├─ valor: "A", "E", "1", "2", etc.
+    │   ├─ imagen: recurso drawable
+    │   └─ descripcion: texto explicativo
+    ↓
+    ├─ Validar disponibilidad en modelo TFLite
+    │   ├─ Si NO disponible (ej: B, C, 4, 5):
+    │   │   └─ Mostrar mensaje "Seña no disponible" + deshabilitar cámara
+    │   └─ Si disponible (A,E,I,O,U,1,2,3):
+    │       └─ Continuar con setup de cámara
+    ↓
+    ├─ Verificar permiso de cámara
+    │   ├─ No concedido → Solicitar en runtime
+    │   └─ Denegado → Toast + finish()
+    ↓
+    ├─ Inicializar OpenCV + LSMDetector
+    │   └─ (Igual que TraducirActivity)
+    ↓
+    ├─ Mostrar UI de práctica:
+    │   ├─ Card objetivo: Imagen + descripción de la seña
+    │   ├─ Card progreso: "0 / 3" repeticiones
+    │   └─ Card feedback: Instrucciones iniciales
+    ↓
+    ├─ Ciclo de validación (onCameraFrame):
+    │   ├─ 1. Ejecutar LSMDetector.recognizeImage()
+    │   ├─ 2. Obtener detección + confianza
+    │   ├─ 3. procesarDeteccion() en UI thread:
+    │   │   ├─ a. Verificar si coincide con seña objetivo
+    │   │   ├─ b. Verificar confianza >90%
+    │   │   ├─ c. Si correcta y NO validando:
+    │   │   │   └─ iniciarValidacion()
+    │   │   │       ├─ Mostrar ProgressBar de 5 segundos
+    │   │   │       ├─ Programar validacionRunnable
+    │   │   │       └─ Actualizar feedback: "¡Mantén la seña!"
+    │   │   ├─ d. Si correcta y SÍ validando:
+    │   │   │   └─ actualizarValidacion()
+    │   │   │       └─ Actualizar ProgressBar y contador
+    │   │   └─ e. Si incorrecta y SÍ validando:
+    │   │       └─ cancelarValidacion()
+    │   │           ├─ Ocultar ProgressBar
+    │   │           └─ Mensaje: "Seña perdida"
+    │   └─ 4. Al completar 5 segundos:
+    │       └─ repeticionCompletada()
+    │           ├─ repeticionesCompletadas++
+    │           ├─ Actualizar progreso: "1 / 3", "2 / 3", "3 / 3"
+    │           ├─ Mostrar check verde + mensaje de éxito
+    │           └─ Si repeticionesCompletadas >= 3:
+    │               └─ practicaCompletada()
+    │                   ├─ Mensaje: "¡Felicidades! Has completado la práctica"
+    │                   ├─ Icono de éxito
+    │                   └─ Cerrar activity después de 3 segundos
+    ↓
+    └─ Botón "Volver" → finish() en cualquier momento
 ```
 
 ### Flujo del Módulo Traducir (IA en Tiempo Real)
@@ -991,6 +1073,7 @@ scaledBitmap.recycle();
    - Posible mejora: Agregar archivos `strings-en.xml`, `strings-fr.xml`, etc.
 5. **Orientación de pantalla forzada**
    - TraducirActivity: Solo landscape (optimizado para cámara + panel lateral)
+   - PracticarActivity: Solo landscape (optimizado para cámara + feedback visual)
    - Resto de Activities: Solo portrait (mejor UX para formularios y listas)
    - No hay soporte para modo libre o rotación dinámica
 6. **Detección afectada por condiciones ambientales**:
@@ -1064,6 +1147,7 @@ Este proyecto es privado y está protegido por derechos de autor.
 ### ✅ MVP Completado (v1.0.0)
 - [x] Sistema de autenticación completo (email + Google)
 - [x] Módulo Aprender (Abecedario 27 letras + Números 0-10)
+- [x] ✨ Modo Práctica con validación en tiempo real (NUEVO)
 - [x] Módulo Traducir con IA en tiempo real
 - [x] Modelo TensorFlow Lite entrenado (9 clases)
 - [x] Sistema de gamificación
@@ -1073,7 +1157,10 @@ Este proyecto es privado y está protegido por derechos de autor.
 
 ### 🚧 Próximas Features (Post-MVP)
 - [ ] Módulo "Palabras Comunes" en Aprender
-- [ ] Expansión de señas detectables (consonantes, más números)
+- [ ] Expansión de señas detectables en modo práctica (todas las letras y números)
+- [ ] Estadísticas de práctica guardadas en Firebase Firestore
+- [ ] Niveles de dificultad en modo práctica (fácil, normal, difícil)
+- [ ] Modo secuencia para practicar múltiples señas seguidas
 - [ ] Tutorial de primera vez para nuevos usuarios
 - [ ] Tests unitarios e instrumentados
 - [ ] Leaderboard con Firebase Firestore

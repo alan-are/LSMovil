@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.example.lsmovil" />
-                  <option name="mobileSdkAppId" value="1:729960099395:android:e3f7a8647c0852c23aeef6" />
-                  <option name="projectId" value="lsmovil-336fa" />
-                  <option name="projectNumber" value="729960099395" />
+                  <option name="appId" value="PLACEHOLDER" />
+                  <option name="mobileSdkAppId" value="" />
+                  <option name="projectId" value="" />
+                  <option name="projectNumber" value="" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

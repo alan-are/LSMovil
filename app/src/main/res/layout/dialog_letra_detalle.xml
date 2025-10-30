@@ -81,6 +81,18 @@
                 android:fontFamily="sans-serif"
                 android:lineSpacingExtra="4dp" />
 
+            <!-- Botón Practicar -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPracticar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Practicar con Cámara"
+                android:textSize="16sp"
+                style="@style/Widget.Material3.Button"
+                app:icon="@android:drawable/ic_menu_camera"
+                app:iconGravity="start" />
+
         </LinearLayout>
 
     </LinearLayout>

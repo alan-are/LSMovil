@@ -92,6 +92,13 @@
             android:screenOrientation="landscape"
             android:theme="@style/Base.Theme.App" />
 
+        <!-- Actividad para practicar señas LSM con validación en tiempo real -->
+        <activity
+            android:name=".PracticarActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:theme="@style/Base.Theme.App" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

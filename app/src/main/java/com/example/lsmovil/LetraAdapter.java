@@ -65,6 +65,7 @@ public class LetraAdapter extends RecyclerView.Adapter<LetraAdapter.LetraViewHol
         ImageView imageViewLetraDialog = dialog.findViewById(R.id.imageViewLetraDialog);
         TextView textViewDescripcionDialog = dialog.findViewById(R.id.textViewDescripcionDialog);
         ImageView btnCerrarDialog = dialog.findViewById(R.id.btnCerrarDialog);
+        com.google.android.material.button.MaterialButton btnPracticar = dialog.findViewById(R.id.btnPracticar);
 
         // Configurar datos
         textViewLetraDialog.setText(letra.getLetra());
@@ -73,6 +74,20 @@ public class LetraAdapter extends RecyclerView.Adapter<LetraAdapter.LetraViewHol
 
         // Botón cerrar
         btnCerrarDialog.setOnClickListener(v -> dialog.dismiss());
+
+        // Botón practicar
+        btnPracticar.setOnClickListener(v -> {
+            dialog.dismiss();
+            
+            // Crear Intent para PracticarActivity
+            android.content.Intent intent = new android.content.Intent(context, PracticarActivity.class);
+            intent.putExtra("tipo", "letra");
+            intent.putExtra("valor", letra.getLetra());
+            intent.putExtra("imagen", letra.getImagenResId());
+            intent.putExtra("descripcion", letra.getDescripcion());
+            
+            context.startActivity(intent);
+        });
 
         // Mostrar el diálogo
         dialog.show();

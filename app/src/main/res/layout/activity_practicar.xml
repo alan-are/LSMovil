@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface">
+
+    <!-- Vista de la cámara OpenCV (ocupa toda la pantalla) -->
+    <org.opencv.android.JavaCameraView
+        android:id="@+id/camera_view"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Overlay superior con información del objetivo -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardObjetivo"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="?attr/colorSurface">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="6dp">
+
+            <!-- Imagen de la seña objetivo -->
+            <ImageView
+                android:id="@+id/ivObjetivo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:contentDescription="Seña objetivo"
+                android:padding="4dp"
+                android:scaleType="centerInside" />
+
+            <!-- Información de la seña -->
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvObjetivo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Letra A"
+                    android:textColor="?attr/colorOnSurface"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="15"
+                    android:text="Descripción de la seña"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Card de progreso en la esquina superior derecha -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardProgreso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Progreso"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:fontFamily="sans-serif-medium" />
+
+            <TextView
+                android:id="@+id/tvProgreso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 / 3"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Card de feedback en el centro inferior -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardFeedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="80dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="?attr/colorSurface">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="4dp"
+            android:gravity="center">
+
+            <!-- Barra de progreso de tiempo (5 segundos) -->
+            <ProgressBar
+                android:id="@+id/progressBarTiempo"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:visibility="gone"
+                android:progressTint="?attr/colorPrimary"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Feedback visual con icono y texto -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/ivFeedback"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:visibility="visible"
+                    android:contentDescription="Estado"
+                    android:layout_marginEnd="12dp" />
+
+                <TextView
+                    android:id="@+id/tvFeedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Realiza la seña y mantenla durante 3 segundos"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Botón para volver -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnVolver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:text="Volver"
+        android:textSize="16sp"
+        style="@style/Widget.Material3.Button.ElevatedButton"
+        app:icon="@android:drawable/ic_menu_revert"
+        app:iconGravity="start" />
+
+</RelativeLayout>

@@ -65,6 +65,7 @@ public class NumeroAdapter extends RecyclerView.Adapter<NumeroAdapter.NumeroView
         ImageView imageViewNumeroDialog = dialog.findViewById(R.id.imageViewNumeroDialog);
         TextView textViewDescripcionDialog = dialog.findViewById(R.id.textViewDescripcionDialog);
         ImageView btnCerrarDialog = dialog.findViewById(R.id.btnCerrarDialog);
+        com.google.android.material.button.MaterialButton btnPracticar = dialog.findViewById(R.id.btnPracticar);
 
         // Configurar datos
         textViewNumeroDialog.setText(numero.getNumero());
@@ -73,6 +74,20 @@ public class NumeroAdapter extends RecyclerView.Adapter<NumeroAdapter.NumeroView
 
         // Botón cerrar
         btnCerrarDialog.setOnClickListener(v -> dialog.dismiss());
+
+        // Botón practicar
+        btnPracticar.setOnClickListener(v -> {
+            dialog.dismiss();
+            
+            // Crear Intent para PracticarActivity
+            android.content.Intent intent = new android.content.Intent(context, PracticarActivity.class);
+            intent.putExtra("tipo", "numero");
+            intent.putExtra("valor", numero.getNumero());
+            intent.putExtra("imagen", numero.getImagenResId());
+            intent.putExtra("descripcion", numero.getDescripcion());
+            
+            context.startActivity(intent);
+        });
 
         // Mostrar el diálogo
         dialog.show();
